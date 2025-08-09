@@ -33,6 +33,7 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+/*
 @Composable
 fun SmartDailyExpenseTrackerTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -55,4 +56,4 @@ fun SmartDailyExpenseTrackerTheme(
         typography = Typography,
         content = content
     )
-}
+}*/
