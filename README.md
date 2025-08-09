@@ -53,6 +53,7 @@ AI assisted in:
 | **State Management (ViewModel + StateFlow)** | ✅ |
 | **Validation (amount > 0, title non-empty)** | ✅ |
 | **Light/Dark theme** | ✅ |
+| **Room Persistence for Data Storage (optional bonus)** | ✅ |
 | **Export PDF/CSV (mock)** | ❌ |
 | **Share Intent** | ❌ |
 
