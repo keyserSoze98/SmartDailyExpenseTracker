@@ -13,12 +13,12 @@ import java.time.ZoneId
 import javax.inject.Inject
 import javax.inject.Singleton
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Singleton
 class ExpenseRepositoryImpl @Inject constructor(
     private val dao: ExpenseDao
 ) : ExpenseRepository {
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun getExpensesForDate(date: LocalDate): Flow<List<Expense>> {
         val startOfDay = date.atStartOfDay(ZoneId.systemDefault()).toInstant().toEpochMilli()
         val endOfDay = date.atTime(23, 59, 59).atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
@@ -27,12 +27,10 @@ class ExpenseRepositoryImpl @Inject constructor(
             .map { list -> list.map { it.toDomain() } }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun getTodayExpenses(): Flow<List<Expense>> {
         return getExpensesForDate(LocalDate.now())
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun addExpense(expense: Expense) {
         dao.insertExpense(expense.toEntity())
     }

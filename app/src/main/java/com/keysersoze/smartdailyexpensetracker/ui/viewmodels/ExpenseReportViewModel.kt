@@ -35,13 +35,11 @@ class ExpenseReportViewModel : ViewModel() {
         viewModelScope.launch {
             val formatter = DateTimeFormatter.ofPattern("dd MMM")
 
-            // Mock: last 7 days totals
             val daily = (0..6).map { daysAgo ->
                 val date = LocalDate.now().minusDays((6 - daysAgo).toLong())
                 DailyTotal(date.format(formatter), Random.nextInt(200, 1000).toFloat())
             }
 
-            // Mock: category totals
             val categories = listOf("Food", "Transport", "Shopping", "Bills", "Other")
             val categoryTotals = categories.map {
                 CategoryTotal(it, Random.nextInt(300, 1500).toFloat())

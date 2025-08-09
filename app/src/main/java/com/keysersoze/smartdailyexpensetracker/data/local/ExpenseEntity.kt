@@ -11,5 +11,5 @@ data class ExpenseEntity(
     val category: String,
     val notes: String? = null,
     val receiptUrl: String? = null,
-    val createdAt: Long // epoch millis
+    val createdAt: Long
 )

@@ -42,7 +42,6 @@ fun ExpenseEntryScreen(
 
     var expanded by remember { mutableStateOf(false) }
 
-    // Image picker launcher
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
@@ -57,7 +56,6 @@ fun ExpenseEntryScreen(
             .padding(20.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        // Total Spent Today
         Text(
             text = "Total Spent Today: ₹${"%.2f".format(ui.todayTotal)}",
             style = MaterialTheme.typography.headlineSmall
@@ -65,7 +63,6 @@ fun ExpenseEntryScreen(
 
         Divider()
 
-        // Title
         OutlinedTextField(
             value = ui.title,
             onValueChange = viewModel::onTitleChange,
@@ -75,7 +72,6 @@ fun ExpenseEntryScreen(
             shape = MaterialTheme.shapes.medium
         )
 
-        // Amount
         OutlinedTextField(
             value = ui.amountText,
             onValueChange = { input ->
@@ -89,7 +85,6 @@ fun ExpenseEntryScreen(
             shape = MaterialTheme.shapes.medium
         )
 
-        // Category
         Box(modifier = Modifier.fillMaxWidth()) {
             OutlinedButton(
                 onClick = { expanded = true },
@@ -111,7 +106,6 @@ fun ExpenseEntryScreen(
             }
         }
 
-        // Notes
         OutlinedTextField(
             value = ui.notes,
             onValueChange = viewModel::onNotesChange,
@@ -123,12 +117,10 @@ fun ExpenseEntryScreen(
             shape = MaterialTheme.shapes.medium
         )
 
-        // Receipt + Submit Row
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            // Add Receipt Button
             Box(
                 modifier = Modifier
                     .size(72.dp)
@@ -160,7 +152,6 @@ fun ExpenseEntryScreen(
                 }
             }
 
-            // Submit Button
             Button(
                 onClick = { viewModel.addExpense {} },
                 modifier = Modifier
@@ -172,7 +163,6 @@ fun ExpenseEntryScreen(
             }
         }
 
-        // Error Message
         ui.errorMessage?.let { err ->
             Text(
                 text = err,
@@ -181,7 +171,6 @@ fun ExpenseEntryScreen(
             )
         }
 
-        // Check Animation
         val lastAdded = ui.lastAddedId
         AnimatedVisibility(
             visible = lastAdded != null,
@@ -205,7 +194,6 @@ fun ExpenseEntryScreen(
             }
         }
 
-        // Auto-hide check
         LaunchedEffect(lastAdded) {
             if (lastAdded != null) {
                 Toast.makeText(context, "Expense added", Toast.LENGTH_SHORT).show()

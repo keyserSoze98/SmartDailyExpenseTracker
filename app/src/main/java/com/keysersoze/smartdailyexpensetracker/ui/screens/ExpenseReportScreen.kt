@@ -1,10 +1,15 @@
 package com.keysersoze.smartdailyexpensetracker.ui.screens
 
-import android.R.attr.translationY
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
@@ -16,9 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.nativeCanvas
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -77,18 +80,17 @@ fun ExpenseReportChart(
             modifier = Modifier.padding(16.dp)
         ) {
             val chartHeight = 200.dp
-            val labelGap = 16.dp // space between bar bottom and labels
+            val labelGap = 16.dp
 
             Canvas(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(chartHeight + labelGap + 20.dp) // include label area
+                    .height(chartHeight + labelGap + 20.dp)
             ) {
                 val barSpace = size.width / data.size
                 val barWidth = barSpace * 0.5f
                 val usableHeight = size.height - labelGap.toPx() - 20.dp.toPx()
 
-                // Grid lines
                 val steps = 5
                 repeat(steps + 1) { step ->
                     val y = usableHeight - (usableHeight / steps) * step
@@ -100,12 +102,10 @@ fun ExpenseReportChart(
                     )
                 }
 
-                // Bars + labels
                 data.forEachIndexed { index, value ->
                     val barHeight = (value / maxValue) * usableHeight
                     val xCenter = barSpace * index + barSpace / 2f
 
-                    // Bar
                     drawLine(
                         color = barColor,
                         start = Offset(x = xCenter, y = usableHeight),
@@ -114,15 +114,14 @@ fun ExpenseReportChart(
                         cap = StrokeCap.Round
                     )
 
-                    // Label
                     drawContext.canvas.nativeCanvas.apply {
                         val paint = android.graphics.Paint().apply {
                             textAlign = android.graphics.Paint.Align.CENTER
-                            textSize = 12.sp.toPx() // bigger font
+                            textSize = 12.sp.toPx()
                             color = android.graphics.Color.BLACK
                         }
                         drawText(
-                            labels[index], // full label
+                            labels[index],
                             xCenter,
                             usableHeight + labelGap.toPx() + paint.textSize,
                             paint

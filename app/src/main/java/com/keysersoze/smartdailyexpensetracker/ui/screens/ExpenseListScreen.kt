@@ -27,7 +27,6 @@ fun ExpenseListScreen(
     val state by viewModel.uiState.collectAsState()
     val context = LocalContext.current
 
-    // Calendar state
     var showDatePicker by remember { mutableStateOf(false) }
 
     if (showDatePicker) {
@@ -46,7 +45,6 @@ fun ExpenseListScreen(
 
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
 
-        // Header actions
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -59,7 +57,6 @@ fun ExpenseListScreen(
             }
         }
 
-        // Summary
         Text(
             text = "Total: ₹${state.totalAmount} (${state.totalCount} items)",
             style = MaterialTheme.typography.titleMedium,
@@ -67,7 +64,6 @@ fun ExpenseListScreen(
             modifier = Modifier.padding(vertical = 8.dp)
         )
 
-        // List
         if (state.expenses.isEmpty()) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Text("No expenses found for this date.")
