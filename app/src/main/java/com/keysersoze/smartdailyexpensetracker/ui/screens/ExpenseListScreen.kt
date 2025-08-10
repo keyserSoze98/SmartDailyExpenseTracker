@@ -69,16 +69,44 @@ fun ExpenseListScreen(
                 Text("No expenses found for this date.")
             }
         } else {
+            val groupedExpenses = if (state.groupByCategory) {
+                state.expenses.groupBy { it.category }
+            } else {
+                state.expenses
+                    .sortedByDescending { it.dateTime }
+                    .groupBy { it.dateTime.toLocalTime() }
+            }
+
             LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                items(state.expenses) { expense ->
-                    Card(
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
-                    ) {
-                        Column(modifier = Modifier.padding(12.dp)) {
-                            Text(expense.title, fontWeight = FontWeight.Bold)
-                            Text("₹${expense.amount} • ${expense.category}")
-                            expense.notes?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
+                groupedExpenses.forEach { (groupKey, expenses) ->
+                    item {
+                        val headerText = if (state.groupByCategory) {
+                            groupKey.toString()
+                        } else {
+                            (groupKey as java.time.LocalTime)
+                                .format(DateTimeFormatter.ofPattern("HH:mm"))
+                        }
+
+                        Text(
+                            text = headerText,
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(vertical = 4.dp)
+                        )
+
+                    }
+                    items(expenses) { expense ->
+                        Card(
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
+                        ) {
+                            Column(modifier = Modifier.padding(12.dp)) {
+                                Text(expense.title, fontWeight = FontWeight.Bold)
+                                Text("₹${expense.amount} • ${expense.category}")
+                                expense.notes?.let {
+                                    Text(it, style = MaterialTheme.typography.bodySmall)
+                                }
+                            }
                         }
                     }
                 }
