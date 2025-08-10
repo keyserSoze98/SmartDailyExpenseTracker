@@ -79,7 +79,7 @@ AI assisted in:
 | **UI** | Jetpack Compose |
 | **Architecture** | MVVM |
 | **State Management** | ViewModel + StateFlow |
-| **Data Layer** | In-memory Repository (Room optional) |
+| **Data Layer** | Room Database |
 | **Navigation** | Jetpack Navigation Compose |
 
 ---
